@@ -6,7 +6,12 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index()
 
-GET     /tasklist                   controllers.TaskListController.taskList
+GET     /login                      controllers.LoginController.login
+POST    /validateLogin              controllers.LoginController.validateLogin
+
+GET     /tasklist                                       controllers.TaskListController.taskList
+GET     /product/:productType/:prodNum                  controllers.TaskListController.product(productType, prodNum: Int)
+GET     /productRE/$productType<[a-z]{2}\d\d>/:prodNum  controllers.TaskListController.product(productType, prodNum: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

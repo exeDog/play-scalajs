@@ -1,0 +1,19 @@
+@()
+
+@main("Login") {
+    <h1>Login Page</h1>
+
+    <form action="@routes.LoginController.validateLogin" method="post">
+        Username:
+        <label>
+            <input type="text" name="username" />
+        </label>
+
+        Password:
+        <label>
+            <input type="password" name="password" />
+        </label>
+
+        <button type="submit">Submit</button>
+    </form>
+}
