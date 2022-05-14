@@ -7,7 +7,9 @@
 GET     /                           controllers.HomeController.index()
 
 GET     /login                      controllers.LoginController.login
+GET     /signup                     controllers.LoginController.signup
 POST    /validateLogin              controllers.LoginController.validateLogin
+POST    /validateSignUp             controllers.LoginController.validateSignUp
 
 GET     /tasklist                                       controllers.TaskListController.taskList
 GET     /product/:productType/:prodNum                  controllers.TaskListController.product(productType, prodNum: Int)

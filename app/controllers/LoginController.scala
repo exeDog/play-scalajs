@@ -11,6 +11,10 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
     Ok(views.html.login())
   }
 
+  def signup: Action[AnyContent] = Action {
+    Ok(views.html.signup())
+  }
+
   def validateLogin: Action[AnyContent] = Action { req =>
     req.body.asFormUrlEncoded.map { args =>
       val username = args("username").head
@@ -31,6 +35,18 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
 
       TaskList.createUser(username, password) match {
         case true => Ok("")
+        case _ => InternalServerError
+      }
+    }.getOrElse(InternalServerError)
+  }
+
+  def validateSignUp: Action[AnyContent] =  Action { req =>
+    req.body.asFormUrlEncoded.map { args =>
+      val username = args("username").head
+      val password =  args("password").head
+
+      TaskList.createUser(username, password) match {
+        case true => Redirect(routes.TaskListController.taskList)
         case _ => InternalServerError
       }
     }.getOrElse(InternalServerError)
