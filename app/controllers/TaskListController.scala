@@ -7,9 +7,13 @@ import javax.inject._
 
 @Singleton
 class TaskListController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  def taskList: Action[AnyContent] = Action {
-    val tasks = TaskList.getTasks("priyank")
-    Ok(views.html.tasklist(tasks))
+  def taskList: Action[AnyContent] = Action { req =>
+    req.session.get("username").map {
+      case v =>
+        val tasks = TaskList.getTasks(v)
+        Ok(views.html.tasklist(tasks))
+      case _ => InternalServerError
+    }.getOrElse(Redirect(routes.LoginController.login))
   }
 
   def product(productType: String, prodNum: Int): Action[AnyContent] = Action {

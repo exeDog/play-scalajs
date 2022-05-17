@@ -21,7 +21,7 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val password =  args("password").head
 
       TaskList.validateUser(username, password) match {
-        case true => Redirect(routes.TaskListController.taskList)
+        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username)
         case _ => Redirect(routes.LoginController.login)
       }
     }.getOrElse(InternalServerError)
@@ -46,7 +46,7 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val password =  args("password").head
 
       TaskList.createUser(username, password) match {
-        case true => Redirect(routes.TaskListController.taskList)
+        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username)
         case _ => InternalServerError
       }
     }.getOrElse(InternalServerError)
