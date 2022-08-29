@@ -19,4 +19,14 @@ class TaskListController @Inject()(val controllerComponents: ControllerComponent
   def product(productType: String, prodNum: Int): Action[AnyContent] = Action {
     Ok(s"Product type is ${productType} & product number is ${prodNum}")
   }
+
+  def addTasks(): Action[AnyContent] = Action { implicit request =>
+    request.session.get("username").map { username =>
+      request.body.asFormUrlEncoded.map { args =>
+        val task = args("task").head
+        TaskList.addTask(task, username)
+        Redirect(routes.TaskListController.taskList).flashing("success" -> "Task added successfully")
+      }.getOrElse(InternalServerError)
+    }.getOrElse(InternalServerError)
+  }
 }

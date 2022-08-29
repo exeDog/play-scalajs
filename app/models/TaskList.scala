@@ -19,7 +19,9 @@ object TaskList {
 
   def getTasks(user: String): Seq[String] = tasks.getOrElse(user, Nil)
 
-  def addTask(task: String, user: String): Unit = ???
+  def addTask(task: String, user: String): Unit = {
+    tasks(user) = task :: tasks.getOrElse(user, Nil)
+  }
 
   def removeTask(task: String, user: String): Unit = ???
 

@@ -13,6 +13,7 @@ POST    /validateSignUp             controllers.LoginController.validateSignUp
 GET     /logout                     controllers.LoginController.logout
 
 GET     /tasklist                                       controllers.TaskListController.taskList
+POST    /tasklist                                       controllers.TaskListController.addTasks()
 GET     /product/:productType/:prodNum                  controllers.TaskListController.product(productType, prodNum: Int)
 GET     /productRE/$productType<[a-z]{2}\d\d>/:prodNum  controllers.TaskListController.product(productType, prodNum: Int)
 

@@ -1,7 +1,8 @@
-@(tasks: Seq[String]) (implicit request: RequestHeader, flash: Flash)
+@* taskList Template File *@
+@(tasks: Seq[String])(implicit req: RequestHeader, flash: Flash)
 
 @main("Task List") {
-    <h3> @flash.get("success") </h3>
+   <h3> @flash.get("success") </h3>
     <h2>Task List</h2>
 
     <ul>
@@ -9,6 +10,14 @@
             <li>@task</li>
         }
     </ul>
+
+    <form method="post" action="@routes.TaskListController.taskList">
+        @helper.CSRF.formField
+        <label>
+            <input type="text" name="task" />
+        </label>
+        <button type="submit">Submit</button>
+    </form>
 
     <div>
         <a href="@routes.LoginController.logout">Logout</a>
