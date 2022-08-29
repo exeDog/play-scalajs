@@ -7,11 +7,11 @@ import javax.inject._
 
 @Singleton
 class LoginController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  def login: Action[AnyContent] = Action {
+  def login: Action[AnyContent] = Action { implicit req =>
     Ok(views.html.login())
   }
 
-  def signup: Action[AnyContent] = Action {
+  def signup: Action[AnyContent] = Action { implicit req =>
     Ok(views.html.signup())
   }
 

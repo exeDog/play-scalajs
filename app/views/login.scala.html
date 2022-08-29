@@ -1,9 +1,11 @@
-@()
+@* login Template File *@
+@()(implicit request: RequestHeader, flash: Flash)
 
 @main("Login") {
     <h1>Login Page</h1>
 
     <form action="@routes.LoginController.validateLogin" method="post">
+        @helper.CSRF.formField
         Username:
         <label>
             <input type="text" name="username" />

@@ -1,9 +1,11 @@
-@()
+@* signup Template File *@
+@()(implicit request: RequestHeader, flash: Flash)
 
 @main("Sign Up") {
     <h1>Sign Up</h1>
 
     <form action="@routes.LoginController.validateSignUp" method="post" >
+        @helper.CSRF.formField
         Username:
         <label>
             <input type="text" name="username" />
