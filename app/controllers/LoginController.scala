@@ -32,7 +32,6 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val username = args("username").head
       val password =  args("password").head
 
-
       TaskList.createUser(username, password) match {
         case true => Ok("")
         case _ => InternalServerError
@@ -50,5 +49,9 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
         case _ => InternalServerError
       }
     }.getOrElse(InternalServerError)
+  }
+
+  def logout: Action[AnyContent] = Action {
+    Redirect(routes.LoginController.login).withNewSession
   }
 }
