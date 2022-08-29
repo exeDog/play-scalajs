@@ -1,6 +1,7 @@
-@(tasks: Seq[String])
+@(tasks: Seq[String]) (implicit request: RequestHeader, flash: Flash)
 
 @main("Task List") {
+    <h3> @flash.get("success") </h3>
     <h2>Task List</h2>
 
     <ul>

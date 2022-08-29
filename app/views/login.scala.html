@@ -3,7 +3,7 @@
 
 @main("Login") {
     <h1>Login Page</h1>
-
+    @flash.get("error")
     <form action="@routes.LoginController.validateLogin" method="post">
         @helper.CSRF.formField
         Username:

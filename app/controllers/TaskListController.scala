@@ -7,7 +7,7 @@ import javax.inject._
 
 @Singleton
 class TaskListController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  def taskList: Action[AnyContent] = Action { req =>
+  def taskList: Action[AnyContent] = Action { implicit req =>
     req.session.get("username").map {
       case v =>
         val tasks = TaskList.getTasks(v)

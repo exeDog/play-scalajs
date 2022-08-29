@@ -21,8 +21,8 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val password =  args("password").head
 
       TaskList.validateUser(username, password) match {
-        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username)
-        case _ => Redirect(routes.LoginController.login)
+        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username).flashing("success" -> "Welcome")
+        case _ => Redirect(routes.LoginController.login).flashing("error" -> "Invalid username or password")
       }
     }.getOrElse(InternalServerError)
   }
