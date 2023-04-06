@@ -4,6 +4,8 @@ import models.TaskList
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 import javax.inject._
+import scala.concurrent.Future
+import scala.util.Try
 
 @Singleton
 class TaskListController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
@@ -27,6 +29,19 @@ class TaskListController @Inject()(val controllerComponents: ControllerComponent
         TaskList.addTask(task, username)
         Redirect(routes.TaskListController.taskList).flashing("success" -> "Task added successfully")
       }.getOrElse(InternalServerError)
+    }.getOrElse(InternalServerError)
+  }
+
+  def deleteTask(): Action[AnyContent] = Action { implicit request =>
+    try {
+      for {
+        username <- request.session.get("username")
+        args <- request.body.asFormUrlEncoded
+        task <- args.get("task")
+      } yield {
+        TaskList.removeTask(task.head, username)
+        Redirect(routes.TaskListController.taskList).flashing("success" -> "Task deleted successfully")
+      }
     }.getOrElse(InternalServerError)
   }
 }

@@ -20,9 +20,10 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val username = args("username").head
       val password =  args("password").head
 
-      TaskList.validateUser(username, password) match {
-        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username).flashing("success" -> "Welcome")
-        case _ => Redirect(routes.LoginController.login).flashing("error" -> "Invalid username or password")
+      if (TaskList.validateUser(username, password)) {
+        Redirect(routes.TaskListController.taskList).withSession("username" -> username).flashing("success" -> "Welcome")
+      } else {
+        Redirect(routes.LoginController.login).flashing("error" -> "Invalid username or password")
       }
     }.getOrElse(InternalServerError)
   }
@@ -32,9 +33,10 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val username = args("username").head
       val password =  args("password").head
 
-      TaskList.createUser(username, password) match {
-        case true => Ok("")
-        case _ => InternalServerError
+      if (TaskList.createUser(username, password)) {
+        Ok("")
+      } else {
+        InternalServerError
       }
     }.getOrElse(InternalServerError)
   }
@@ -44,9 +46,10 @@ class LoginController @Inject()(val controllerComponents: ControllerComponents) 
       val username = args("username").head
       val password =  args("password").head
 
-      TaskList.createUser(username, password) match {
-        case true => Redirect(routes.TaskListController.taskList).withSession("username" -> username)
-        case _ => InternalServerError
+      if (TaskList.createUser(username, password)) {
+        Redirect(routes.TaskListController.taskList).withSession("username" -> username)
+      } else {
+        InternalServerError
       }
     }.getOrElse(InternalServerError)
   }
